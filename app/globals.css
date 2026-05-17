@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f7fbff;
+  --foreground: #070b12;
+  --brand-blue: #9bdcff;
+  --brand-blue-strong: #45bff7;
+  --brand-black: #070b12;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+::selection {
+  background: var(--brand-blue);
+  color: var(--brand-black);
+}
