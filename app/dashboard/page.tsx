@@ -8,6 +8,7 @@ import {
   LayoutDashboard,
   LogOut,
   PackagePlus,
+  Radar,
   Search,
   Settings,
   Tags,
@@ -17,6 +18,7 @@ import {
 const menuItems = [
   { label: "Dashboard", icon: LayoutDashboard, active: true },
   { label: "Cotacao de Preco", icon: Tags, active: false },
+  { label: "Transito", icon: Radar, active: false },
   { label: "Produtos", icon: Boxes, active: false },
   { label: "Fornecedores", icon: Building2, active: false },
   { label: "Configuracoes", icon: Settings, active: false },
@@ -24,28 +26,39 @@ const menuItems = [
 
 const moduleActions = [
   {
+    title: "Transito",
+    description: "Modulo para estudo tecnico de radar, orgao, equipamento, via, riscos e sinalizacao.",
+    icon: Radar,
+    status: "Tecnico",
+    href: "/dashboard/transito",
+  },
+  {
     title: "Cadastro Produto",
     description: "Inclua itens, unidades, categorias e dados para compra.",
     icon: PackagePlus,
     status: "Cadastro",
+    href: "#",
   },
   {
     title: "Cotacao",
     description: "Monte uma nova solicitacao e compare propostas recebidas.",
     icon: ClipboardPenLine,
     status: "Operacao",
+    href: "#",
   },
   {
     title: "Altera Cotacao",
     description: "Revise prazos, quantidades e fornecedores participantes.",
     icon: FilePenLine,
     status: "Ajuste",
+    href: "#",
   },
   {
     title: "Cadastro Fornecedor",
     description: "Gerencie contatos, CNPJ, condicoes comerciais e historico.",
     icon: Building2,
     status: "Cadastro",
+    href: "#",
   },
 ];
 
@@ -154,8 +167,9 @@ export default function DashboardPage() {
               {moduleActions.map((action) => {
                 const Icon = action.icon;
                 return (
-                  <button
+                  <Link
                     key={action.title}
+                    href={action.href}
                     className="group flex min-h-52 flex-col rounded-lg border border-black/8 bg-white p-5 text-left shadow-[0_12px_34px_rgba(7,11,18,0.06)] transition hover:-translate-y-0.5 hover:border-[#45bff7] hover:shadow-[0_18px_42px_rgba(7,11,18,0.1)]"
                   >
                     <div className="mb-6 flex items-center justify-between">
@@ -173,7 +187,7 @@ export default function DashboardPage() {
                     <span className="mt-auto pt-6 text-sm font-bold text-[#0577aa]">
                       Acessar
                     </span>
-                  </button>
+                  </Link>
                 );
               })}
             </section>
