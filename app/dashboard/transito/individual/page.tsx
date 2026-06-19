@@ -2,29 +2,17 @@ import Link from "next/link";
 import { Fragment } from "react";
 import {
   ArrowLeft,
-  Building2,
   Camera,
   ClipboardCheck,
   FileText,
   ImagePlus,
   MapPinned,
-  Phone,
   Radar,
   Save,
   ShieldAlert,
   Signpost,
   UserRoundCheck,
 } from "lucide-react";
-
-const transitoMenu = [
-  { label: "Estudo Tecnico Radar", icon: Radar },
-  { label: "Cadastrar Orgao", icon: Building2 },
-  { label: "Cadastrar Responsavel", icon: UserRoundCheck },
-  { label: "Cadastrar Equipamento", icon: Radar },
-  { label: "Rastrear Equipamento", icon: MapPinned },
-  { label: "Agenda Telefone", icon: Phone },
-  { label: "Rel Cliente", icon: FileText },
-];
 
 const sections = [
   {
@@ -40,7 +28,7 @@ const sections = [
   },
   {
     title: "Orgao",
-    icon: Building2,
+    icon: FileText,
     fields: [
       { label: "Codigo do orgao" },
       { label: "Nome / razao social" },
@@ -136,9 +124,13 @@ const sections = [
 ];
 
 const imageSlots = [
+  "Sinalizacao horizontal",
+  "Imagem",
   "Vista Terrestre 1",
   "Vista Terrestre 2",
-  "Vista Aérea",
+  "Mapa",
+  "Vista Aerea",
+  "Croqui",
   "Mapa de Calor de Acidentes",
 ];
 
@@ -221,65 +213,33 @@ function UploadBox({ label }: { label: string }) {
   );
 }
 
-export default function EstudoTecnicoRadarPage() {
+export default function EstudoTecnicoRadarIndividualPage() {
   return (
     <main className="min-h-screen bg-[#f3f7f6] text-[#070b12]">
       <header className="border-b border-black/8 bg-white/92 px-4 py-4 backdrop-blur md:px-8">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <Link
-              href="/dashboard"
+              href="/dashboard/transito"
               className="grid size-10 place-items-center rounded-lg border border-black/10 bg-white text-black/70 transition hover:border-[#0d9488] hover:text-[#0d9488]"
-              aria-label="Voltar para dashboard"
+              aria-label="Voltar para transito"
             >
               <ArrowLeft size={19} />
             </Link>
             <div>
-              <p className="text-sm font-semibold text-[#0f766e]">Modulo principal</p>
-              <h1 className="text-2xl font-bold sm:text-3xl">Transito</h1>
+              <p className="text-sm font-semibold text-[#0f766e]">Modo individual</p>
+              <h1 className="text-2xl font-bold sm:text-3xl">Transito individual</h1>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <Link
-              href="/dashboard/transito/individual"
-              className="flex h-11 items-center justify-center rounded-lg border border-[#0d9488] bg-white px-4 text-sm font-semibold text-[#0f172a] transition hover:bg-[#ecfeff]"
-            >
-              Modo individual
-            </Link>
-            <button className="flex h-11 items-center gap-2 rounded-lg bg-[#0f172a] px-5 text-sm font-bold text-white transition hover:bg-[#111827] focus:outline-none focus:ring-4 focus:ring-[#99f6e4]/45">
-              <Save size={18} />
-              Salvar estudo
-            </button>
-          </div>
+          <button className="flex h-11 items-center gap-2 rounded-lg bg-[#0f172a] px-5 text-sm font-bold text-white transition hover:bg-[#111827] focus:outline-none focus:ring-4 focus:ring-[#99f6e4]/45">
+            <Save size={18} />
+            Salvar estudo individual
+          </button>
         </div>
       </header>
 
-      <div className="flex min-h-[calc(100vh-77px)]">
-        <aside className="hidden w-72 shrink-0 border-r border-white/10 bg-[#07111f] px-5 py-6 text-white lg:block">
-          <div className="mb-6 px-2">
-            <p className="text-xs font-bold uppercase text-[#2dd4bf]">Menu Transito</p>
-            <h2 className="mt-2 text-lg font-bold">Operacoes</h2>
-          </div>
-
-          <nav className="space-y-2">
-            {transitoMenu.map((item) => {
-              const Icon = item.icon;
-              return (
-                <button
-                  key={item.label}
-                  type="button"
-                  className="flex min-h-11 w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-semibold text-white/72 transition hover:bg-white/10 hover:text-white"
-                >
-                  <Icon size={18} className="shrink-0 text-[#2dd4bf]" />
-                  <span>{item.label}</span>
-                </button>
-              );
-            })}
-          </nav>
-        </aside>
-
-        <div className="min-w-0 flex-1 px-4 py-6 md:px-8 md:py-8">
+      <div className="mx-auto max-w-7xl px-4 py-6 md:px-8 md:py-8">
         <section className="mb-6 grid gap-4 lg:grid-cols-[1fr_340px]">
           <div className="rounded-lg border border-black/8 bg-[#0f172a] p-6 text-white shadow-[0_16px_44px_rgba(15,23,42,0.13)] md:p-7">
             <div className="flex flex-wrap items-start justify-between gap-5">
@@ -287,59 +247,14 @@ export default function EstudoTecnicoRadarPage() {
                 <div className="mb-4 grid size-12 place-items-center rounded-lg bg-[#2dd4bf] text-[#0f172a]">
                   <FileText size={25} />
                 </div>
-                <h2 className="text-2xl font-bold md:text-3xl">Cadastro de estudo tecnico para fiscalizacao</h2>
+                <h2 className="text-2xl font-bold md:text-3xl">Estudo individual de transito</h2>
                 <p className="mt-3 max-w-2xl text-sm leading-6 text-white/70">
-                  Preencha os dados do responsavel, orgao, equipamento, local,
-                  classificacao da via, riscos, sinalizacao e imagens tecnicas.
+                  Use este modo para registrar um estudo tecnico individual com os mesmos campos do formulario de transito.
                 </p>
-                <div className="mt-5 flex flex-wrap gap-3 rounded-lg border border-white/14 bg-white/8 p-3">
-                  <button
-                    type="button"
-                    className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-[#2dd4bf] px-5 text-sm font-bold text-[#0f172a] shadow-[0_10px_24px_rgba(45,212,191,0.26)] transition hover:bg-[#99f6e4] focus:outline-none focus:ring-4 focus:ring-[#99f6e4]/45"
-                  >
-                    <FileText size={18} />
-                    Levantamento Técnico
-                  </button>
-                  <button
-                    type="button"
-                    className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-[#2dd4bf] px-5 text-sm font-bold text-[#0f172a] shadow-[0_10px_24px_rgba(45,212,191,0.26)] transition hover:bg-[#99f6e4] focus:outline-none focus:ring-4 focus:ring-[#99f6e4]/45"
-                  >
-                    <FileText size={18} />
-                    Relatorio licitacao
-                  </button>
-                  <button
-                    type="button"
-                    className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-[#2dd4bf] px-5 text-sm font-bold text-[#0f172a] shadow-[0_10px_24px_rgba(45,212,191,0.26)] transition hover:bg-[#99f6e4] focus:outline-none focus:ring-4 focus:ring-[#99f6e4]/45"
-                  >
-                    <UserRoundCheck size={18} />
-                    Cadastrar responsavel relatorio
-                  </button>
-                  <button
-                    type="button"
-                    className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-[#2dd4bf] px-5 text-sm font-bold text-[#0f172a] shadow-[0_10px_24px_rgba(45,212,191,0.26)] transition hover:bg-[#99f6e4] focus:outline-none focus:ring-4 focus:ring-[#99f6e4]/45"
-                  >
-                    <Radar size={18} />
-                    Cadastro equipamento relatorio
-                  </button>
-                  <button
-                    type="button"
-                    className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-[#2dd4bf] px-5 text-sm font-bold text-[#0f172a] shadow-[0_10px_24px_rgba(45,212,191,0.26)] transition hover:bg-[#99f6e4] focus:outline-none focus:ring-4 focus:ring-[#99f6e4]/45"
-                  >
-                    <Signpost size={18} />
-                    Estudo Técnico
-                  </button>
-                  <button
-                    type="button"
-                    className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-[#2dd4bf] px-5 text-sm font-bold text-[#0f172a] shadow-[0_10px_24px_rgba(45,212,191,0.26)] transition hover:bg-[#99f6e4] focus:outline-none focus:ring-4 focus:ring-[#99f6e4]/45"
-                  >
-                    <FileText size={18} />
-                    Capa Lombada
-                  </button>
-                </div>
               </div>
               <div className="rounded-lg border border-white/12 bg-white/8 px-4 py-3">
-                <p className="text-xs text-white/54">Funcionalidade</p>
-                <p className="mt-1 text-sm font-bold text-[#99f6e4]">Estudo tecnico radar</p>
+                <p className="text-xs text-white/54">Modo</p>
+                <p className="mt-1 text-sm font-bold text-[#99f6e4]">Individual</p>
               </div>
             </div>
           </div>
@@ -355,8 +270,8 @@ export default function EstudoTecnicoRadarPage() {
               </div>
             </div>
             <div className="space-y-3 text-sm text-black/62">
-              <p>Use os campos para montar o documento base do estudo tecnico.</p>
-              <p>Os anexos aceitam imagens para foto, equipamento, vistas, mapa, croqui e mapa de calor.</p>
+              <p>Preencha os dados do responsavel, orgao, equipamento e local para o modo individual.</p>
+              <p>Os anexos aceitam imagens para fotos, mapas, croqui e sinalizacao horizontal.</p>
             </div>
           </aside>
         </section>
@@ -380,7 +295,7 @@ export default function EstudoTecnicoRadarPage() {
                   ))}
                 </div>
 
-                {"uploads" in section && section.uploads ? (
+                {section.uploads ? (
                   <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                     {section.uploads.map((upload) => (
                       <UploadBox key={upload} label={upload} />
@@ -409,18 +324,17 @@ export default function EstudoTecnicoRadarPage() {
 
           <div className="flex flex-col-reverse gap-3 border-t border-black/8 pt-5 sm:flex-row sm:justify-end">
             <Link
-              href="/dashboard"
+              href="/dashboard/transito"
               className="flex h-11 items-center justify-center rounded-lg border border-black/10 bg-white px-5 text-sm font-bold text-black/70 transition hover:border-[#0d9488] hover:text-[#0d9488]"
             >
               Cancelar
             </Link>
             <button className="flex h-11 items-center justify-center gap-2 rounded-lg bg-[#0f172a] px-5 text-sm font-bold text-white transition hover:bg-[#111827] focus:outline-none focus:ring-4 focus:ring-[#99f6e4]/45">
               <Save size={18} />
-              Salvar estudo tecnico
+              Salvar modo individual
             </button>
           </div>
         </form>
-        </div>
       </div>
     </main>
   );
