@@ -1,2 +1,2 @@
-http://localhost:3001/dashboard
+http://localhost:3000/dashboard
 app/dashboard/page.tsx
