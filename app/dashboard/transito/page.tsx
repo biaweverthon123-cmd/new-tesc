@@ -31,7 +31,7 @@ const sections = [
     title: "Resposta tecnica",
     icon: ClipboardCheck,
     fields: [
-      { label: "Codigo da resposta", placeholder: "RESP-0001" },
+      { label: "Código", placeholder: "RESP-0001" },
       { label: "Data", type: "date" },
       { label: "Nome do responsavel tecnico" },
       { label: "Qualificacao" },
@@ -42,12 +42,12 @@ const sections = [
     title: "Orgao",
     icon: Building2,
     fields: [
-      { label: "Codigo do orgao" },
+      { label: "Código" },
       { label: "Nome / razao social" },
-      { label: "Municipio - UF", placeholder: "Cidade - UF" },
-      { label: "Endereco" },
+      { label: "Município", placeholder: "Cidade" },
+      { label: "Endereço - UF" },
       { label: "Numero do CNPJ" },
-      { label: "Numero", type: "number" },
+      { label: "Número", type: "text", placeholder: "Digite as informações" },
     ],
     uploads: ["Foto do orgao"],
   },
@@ -55,7 +55,7 @@ const sections = [
     title: "Equipamento",
     icon: Radar,
     fields: [
-      { label: "Codigo do equipamento" },
+      { label: "Código" },
       { label: "Nome do equipamento" },
       { label: "Tipo" },
       { label: "Metrologia" },
@@ -69,14 +69,21 @@ const sections = [
     title: "Local",
     icon: MapPinned,
     fields: [
-      { label: "Ponto" },
+      { label: "Código" },
       { label: "Endereco" },
       { label: "Numero" },
       { label: "Complemento" },
-      { label: "Sentido do fluxo fiscalizado" },
+      {
+        label: "Sentido do fluxo fiscalizado",
+        options: [
+          "Bairro ==> Centro",
+          "Bairro <== Centro",
+          "Ambos Bairro ==> Centro Bairro <== Centro",
+        ],
+      },
       { label: "Outro sentido" },
       { label: "Definicao do sentido" },
-      { label: "Coordenada geografica", coordinate: true, wide: true },
+      { label: "Coordenada geografica", type: "text", wide: true },
     ],
   },
   {
@@ -152,6 +159,7 @@ type Field = {
   textarea?: boolean;
   coordinate?: boolean;
   tab?: boolean;
+  options?: string[];
 };
 
 function FieldControl({ field }: { field: Field }) {
@@ -173,7 +181,19 @@ function FieldControl({ field }: { field: Field }) {
   return (
     <label className={field.wide ? "md:col-span-2 xl:col-span-3" : ""}>
       <span className="text-sm font-semibold text-black/72">{field.label}</span>
-      {field.coordinate ? (
+      {field.options ? (
+        <div className="mt-2 grid gap-2 sm:grid-cols-3">
+          {field.options.map((option) => (
+            <button
+              key={option}
+              type="button"
+              className="rounded-lg border border-black/10 bg-white px-3 py-3 text-left text-sm font-semibold text-black/72 transition hover:border-[#0d9488] hover:bg-[#ecfdf5] focus:outline-none focus:ring-4 focus:ring-[#99f6e4]/35"
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+      ) : field.coordinate ? (
         <div className="mt-2 grid gap-4 md:grid-cols-2">
           <input
             className={inputClass}
@@ -241,12 +261,6 @@ export default function EstudoTecnicoRadarPage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            <Link
-              href="/dashboard/transito/individual"
-              className="flex h-11 items-center justify-center rounded-lg border border-[#0d9488] bg-white px-4 text-sm font-semibold text-[#0f172a] transition hover:bg-[#ecfeff]"
-            >
-              Modo individual
-            </Link>
             <button className="flex h-11 items-center gap-2 rounded-lg bg-[#0f172a] px-5 text-sm font-bold text-white transition hover:bg-[#111827] focus:outline-none focus:ring-4 focus:ring-[#99f6e4]/45">
               <Save size={18} />
               Salvar estudo

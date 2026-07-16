@@ -63,7 +63,19 @@ const formSections = [
     icon: FileText,
     fields: [
       { label: "Codigo juridico", placeholder: "JUR-0001" },
-      { label: "Tipo de registro", placeholder: "Contrato, processo ou parecer" },
+      {
+        label: "Tipo de registro",
+        placeholder: "Selecione a ficha tecnica",
+        options: [
+          "Ministerio Publico",
+          "Tribunal de Contas do Estado",
+          "Tribunal de Contas da Uniao",
+          "Tribunal de Justica Estadual",
+          "Tribunal de Justica Federal",
+          "Conselho de Classe",
+          "Outros",
+        ],
+      },
       { label: "Numero do processo / contrato" },
       { label: "Area solicitante" },
       { label: "Empresa / fornecedor" },
@@ -99,6 +111,7 @@ type Field = {
   type?: string;
   wide?: boolean;
   textarea?: boolean;
+  options?: string[];
 };
 
 function FieldControl({ field }: { field: Field }) {
@@ -113,6 +126,17 @@ function FieldControl({ field }: { field: Field }) {
           className={`${inputClass} min-h-28 resize-y leading-6`}
           placeholder={field.placeholder ?? "Descreva as informacoes"}
         />
+      ) : field.options ? (
+        <select className={inputClass} defaultValue="">
+          <option value="" disabled>
+            {field.placeholder ?? "Selecione uma opcao"}
+          </option>
+          {field.options.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
       ) : (
         <input
           className={inputClass}

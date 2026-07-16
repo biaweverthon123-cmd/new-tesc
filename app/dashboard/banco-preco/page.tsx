@@ -17,12 +17,29 @@ import {
 
 const bancoPrecoMenu = [
   { label: "Cadastra o Produto", icon: PackagePlus },
-  { label: "Consultar Órgão Documento", icon: Search },
+  { label: "Consultar Preço", icon: Search },
   { label: "Categorias", icon: Tags },
   { label: "Fornecedores", icon: Building2 },
   { label: "N.Fiscal", icon: FileText },
   { label: "Relatórios", icon: FileText },
 ];
+
+const unidadesTecnicas = [
+  "UN",
+  "KG",
+  "L",
+  "PC",
+  "LT",
+  "EQUIPE",
+  "EQUIPE HORA",
+  "GL",
+  "M2",
+  "M3",
+  "CX",
+  "PCT",
+  "H",
+  "MT",
+] as const;
 
 const sections = [
   {
@@ -30,16 +47,13 @@ const sections = [
     icon: PackagePlus,
     fields: [
       { label: "Código do produto", placeholder: "PROD-0001" },
-      { label: "Nome do produto" },
-      { label: "Unidade", placeholder: "Unidade, caixa, metro" },
-      { label: "Órgão Documento Medio Edital" },
-      { label: "Órgão Documento Medio Inex" },
-      { label: "Descrição", textarea: true, wide: true },
+      { label: "Unidade", options: unidadesTecnicas },
+      { label: "Nome do produto", textarea: true, wide: true },
       { label: "Especificação", textarea: true, wide: true },
     ],
   },
   {
-    title: "Órgão Documento",
+    title: "Pesquisa de Preço",
     icon: Tags,
     fields: [
       { label: "Empresa/Órgão" },
@@ -57,6 +71,7 @@ type Field = {
   step?: string;
   wide?: boolean;
   textarea?: boolean;
+  options?: readonly string[];
 };
 
 function FieldControl({ field }: { field: Field }) {
@@ -66,7 +81,18 @@ function FieldControl({ field }: { field: Field }) {
   return (
     <label className={field.wide ? "md:col-span-2 xl:col-span-3" : ""}>
       <span className="text-sm font-semibold text-black/72">{field.label}</span>
-      {field.textarea ? (
+      {field.options ? (
+        <select className={inputClass} defaultValue="">
+          <option value="" disabled>
+            Selecione a unidade
+          </option>
+          {field.options.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      ) : field.textarea ? (
         <textarea
           className={`${inputClass} min-h-28 resize-y leading-6`}
           placeholder={field.placeholder ?? "Descreva as informações"}
@@ -107,7 +133,7 @@ function PriceComparisons() {
           <div className="grid size-10 place-items-center rounded-lg bg-[#ccfbf1] text-[#0f766e]">
             <Tags size={20} />
           </div>
-          <h2 className="text-lg font-bold">Órgão Documento</h2>
+          <h2 className="text-lg font-bold">Pesquisa de Preço</h2>
         </div>
         <button
           type="button"
@@ -164,8 +190,6 @@ function ProductListSection() {
               <th className="py-3 font-semibold">Código</th>
               <th className="py-3 font-semibold">Produto</th>
               <th className="py-3 font-semibold">Unidade</th>
-              <th className="py-3 font-semibold">Órgão Documento Medio Edital</th>
-              <th className="py-3 font-semibold">Órgão Documento Medio Inex</th>
             </tr>
           </thead>
           <tbody>
@@ -185,25 +209,16 @@ function ProductListSection() {
                 />
               </td>
               <td className="py-4 pr-4">
-                <input
-                  className="w-full rounded-lg border border-black/10 bg-white px-3 py-2 text-sm outline-none transition placeholder:text-black/32 focus:border-[#0d9488] focus:ring-4 focus:ring-[#99f6e4]/35"
-                  placeholder="Digite as informações"
-                  type="text"
-                />
-              </td>
-              <td className="py-4 pr-4">
-                <input
-                  className="w-full rounded-lg border border-black/10 bg-white px-3 py-2 text-sm outline-none transition placeholder:text-black/32 focus:border-[#0d9488] focus:ring-4 focus:ring-[#99f6e4]/35"
-                  placeholder="Digite as informações"
-                  type="text"
-                />
-              </td>
-              <td className="py-4">
-                <input
-                  className="w-full rounded-lg border border-black/10 bg-white px-3 py-2 text-sm outline-none transition placeholder:text-black/32 focus:border-[#0d9488] focus:ring-4 focus:ring-[#99f6e4]/35"
-                  placeholder="Digite as informações"
-                  type="text"
-                />
+                <select className="w-full rounded-lg border border-black/10 bg-white px-3 py-2 text-sm outline-none transition placeholder:text-black/32 focus:border-[#0d9488] focus:ring-4 focus:ring-[#99f6e4]/35" defaultValue="">
+                  <option value="" disabled>
+                    Selecione
+                  </option>
+                  {unidadesTecnicas.map((unidade) => (
+                    <option key={unidade} value={unidade}>
+                      {unidade}
+                    </option>
+                  ))}
+                </select>
               </td>
             </tr>
           </tbody>
@@ -228,7 +243,7 @@ export default function BancoPrecoPage() {
             </Link>
             <div>
               <p className="text-sm font-semibold text-[#0f766e]">Módulo principal</p>
-              <h1 className="text-2xl font-bold sm:text-3xl">Banco de Órgão Documento</h1>
+              <h1 className="text-2xl font-bold sm:text-3xl">Banco de Preço</h1>
             </div>
           </div>
 
@@ -242,7 +257,7 @@ export default function BancoPrecoPage() {
       <div className="flex min-h-[calc(100vh-77px)]">
         <aside className="hidden w-72 shrink-0 border-r border-white/10 bg-[#07111f] px-5 py-6 text-white lg:block">
           <div className="mb-6 px-2">
-            <p className="text-xs font-bold uppercase text-[#2dd4bf]">Menu Banco de Órgão Documento</p>
+            <p className="text-xs font-bold uppercase text-[#2dd4bf]">Menu Banco de Preço</p>
             <h2 className="mt-2 text-lg font-bold">Operações</h2>
           </div>
 
@@ -273,7 +288,7 @@ export default function BancoPrecoPage() {
                   </div>
                   <h2 className="text-2xl font-bold md:text-3xl">Cadastra o Produto</h2>
                   <p className="mt-3 max-w-2xl text-sm leading-6 text-white/70">
-                    Registre produtos, órgãos documentos de referência, fornecedores e especificações para consultas de compra.
+                    Registre produtos, pesquisas de preço, fornecedores e especificações para consultas de compra.
                   </p>
                   <div className="mt-5 flex flex-wrap gap-3 rounded-lg border border-white/14 bg-white/8 p-3">
                     <button
@@ -288,7 +303,7 @@ export default function BancoPrecoPage() {
                       className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-[#2dd4bf] px-5 text-sm font-bold text-[#0f172a] shadow-[0_10px_24px_rgba(45,212,191,0.26)] transition hover:bg-[#99f6e4] focus:outline-none focus:ring-4 focus:ring-[#99f6e4]/45"
                     >
                       <Search size={18} />
-                      Consultar Órgão Documento
+                      Consultar Preço
                     </button>
                     <button
                       type="button"
@@ -302,13 +317,13 @@ export default function BancoPrecoPage() {
                       className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-[#2dd4bf] px-5 text-sm font-bold text-[#0f172a] shadow-[0_10px_24px_rgba(45,212,191,0.26)] transition hover:bg-[#99f6e4] focus:outline-none focus:ring-4 focus:ring-[#99f6e4]/45"
                     >
                       <FileText size={18} />
-                      Relatório de Órgão Documento
+                      Relatório de Preço
                     </button>
                   </div>
                 </div>
                 <div className="rounded-lg border border-white/12 bg-white/8 px-4 py-3">
                   <p className="text-xs text-white/54">Funcionalidade</p>
-                  <p className="mt-1 text-sm font-bold text-[#99f6e4]">Banco de Órgão Documento</p>
+                  <p className="mt-1 text-sm font-bold text-[#99f6e4]">Banco de Preço</p>
                 </div>
               </div>
             </div>
@@ -319,13 +334,13 @@ export default function BancoPrecoPage() {
                   <Tags size={20} />
                 </div>
                 <div>
-                  <h3 className="font-bold">Referência de Órgão Documento</h3>
+                  <h3 className="font-bold">Referência de Preço</h3>
                   <p className="text-xs text-black/50">Produto, fornecedor e cotação.</p>
                 </div>
               </div>
               <div className="space-y-3 text-sm text-black/62">
                 <p>Use os campos para manter uma base de produtos e valores pesquisados.</p>
-                <p>As informações ajudam a comparar órgãos documentos e organizar futuras cotações.</p>
+                <p>As informações ajudam a comparar preços e organizar futuras cotações.</p>
               </div>
             </aside>
           </section>
@@ -334,7 +349,7 @@ export default function BancoPrecoPage() {
             {sections.map((section) => {
               const Icon = section.icon;
 
-              if (section.title === "Órgão Documento") {
+              if (section.title === "Pesquisa de Preço") {
                 return (
                   <div key={section.title} className="space-y-5">
                     <PriceComparisons />

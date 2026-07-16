@@ -1,5 +1,10 @@
 node_modules/
 .next/
 .next-local/
+.next-dev/
 tsconfig.tsbuildinfo
 *.log
+meu-projeto/node_modules/
+meu-projeto/dist/
+meu-projeto/.env
+meu-projeto/prisma/*.db*

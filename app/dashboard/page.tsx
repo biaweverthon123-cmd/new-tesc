@@ -2,26 +2,18 @@ import Link from "next/link";
 import {
   Bell,
   Boxes,
-  Building2,
-  ClipboardPenLine,
-  FilePenLine,
   LayoutDashboard,
   PackagePlus,
   Radar,
   Search,
-  Settings,
   ShieldCheck,
-  Tags,
 } from "lucide-react";
 
 const menuItems = [
   { label: "Pagina Inicial", icon: LayoutDashboard, active: true, href: "/dashboard" },
-  { label: "Cotacao de Preco", icon: Tags, active: false, href: "#" },
   { label: "Transito", icon: Radar, active: false, href: "/dashboard/transito" },
-  { label: "Banco de Órgão Documento", icon: Boxes, active: false, href: "/dashboard/banco-preco" },
-  { label: "Fornecedores", icon: Building2, active: false, href: "#" },
+  { label: "Banco de Preço", icon: Boxes, active: false, href: "/dashboard/banco-preco" },
   { label: "Juridico", icon: ShieldCheck, active: false, href: "/dashboard/juridico" },
-  { label: "Configuracoes", icon: Settings, active: false, href: "#" },
 ];
 
 const moduleActions = [
@@ -33,39 +25,11 @@ const moduleActions = [
     href: "/dashboard/transito",
   },
   {
-    title: "Transito Individual",
-    description: "Modo individual para preencher o estudo tecnico do Transito com campos especificos.",
-    icon: Radar,
-    status: "Individual",
-    href: "/dashboard/transito/individual",
-  },
-  {
-    title: "Banco de Órgão Documento",
+    title: "Banco de Preço",
     description: "Consulte referencias e cadastre produtos, unidades, categorias e dados para compra.",
     icon: PackagePlus,
-    status: "Órgão Documento",
+    status: "Preços",
     href: "/dashboard/banco-preco",
-  },
-  {
-    title: "Cotacao",
-    description: "Monte uma nova solicitacao e compare propostas recebidas.",
-    icon: ClipboardPenLine,
-    status: "Operacao",
-    href: "#",
-  },
-  {
-    title: "Altera Cotacao",
-    description: "Revise prazos, quantidades e fornecedores participantes.",
-    icon: FilePenLine,
-    status: "Ajuste",
-    href: "#",
-  },
-  {
-    title: "Cadastro Fornecedor",
-    description: "Gerencie contatos, CNPJ, condicoes comerciais e historico.",
-    icon: Building2,
-    status: "Cadastro",
-    href: "#",
   },
   {
     title: "Juridico",
@@ -114,7 +78,7 @@ export default function DashboardPage() {
           <div className="mt-auto rounded-lg border border-white/10 bg-white/6 p-4">
             <p className="text-sm font-semibold">Modulo ativo</p>
             <p className="mt-1 text-xs leading-5 text-white/58">
-              Transito, Banco de Órgão Documento e Juridico disponiveis para cadastro e acompanhamento.
+              Transito, Banco de Preço e Juridico disponiveis para cadastro e acompanhamento.
             </p>
           </div>
 
@@ -184,7 +148,7 @@ export default function DashboardPage() {
               </div>
             </section>
 
-            <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {moduleActions.map((action) => {
                 const Icon = action.icon;
                 return (
@@ -275,7 +239,7 @@ export default function DashboardPage() {
                 <div className="mt-6 rounded-lg border border-[#0d9488]/20 bg-[#ecfdf5] p-4">
                   <p className="text-xs font-semibold text-[#0f766e] uppercase">Dica</p>
                   <p className="mt-2 text-xs leading-5 text-[#0f766e]/80">
-                    Use o modo individual para registros rapidos ou o modulo completo para estudos detalhados.
+                    Use o modulo Transito para registrar e acompanhar estudos tecnicos detalhados.
                   </p>
                 </div>
               </div>
