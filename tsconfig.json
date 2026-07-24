@@ -39,6 +39,6 @@
   "exclude": [
     "node_modules",
     ".next",
-    "meu-projeto"
+    "backend"
   ]
 }

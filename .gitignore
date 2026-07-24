@@ -4,7 +4,7 @@ node_modules/
 .next-dev/
 tsconfig.tsbuildinfo
 *.log
-meu-projeto/node_modules/
-meu-projeto/dist/
-meu-projeto/.env
-meu-projeto/prisma/*.db*
+backend/node_modules/
+backend/dist/
+backend/.env
+backend/prisma/*.db*
